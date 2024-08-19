@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsgbwq2cmcjjk"]
+
+[ext_resource type="Script" path="res://addons/depth_buffer/depth_render_viewport.gd" id="1_1ddg3"]
+
+[sub_resource type="Environment" id="Environment_4am2h"]
+ambient_light_source = 1
+reflected_light_source = 1
+
+[node name="DepthRenderViewport" type="SubViewport"]
+process_priority = 500
+transparent_bg = true
+handle_input_locally = false
+debug_draw = 1
+positional_shadow_atlas_size = 0
+canvas_cull_mask = 4293918720
+script = ExtResource("1_1ddg3")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+unique_name_in_owner = true
+process_priority = 500
+cull_mask = 0
+environment = SubResource("Environment_4am2h")
+
+[node name="ShaderMesh" type="MeshInstance3D" parent="Camera3D"]
+unique_name_in_owner = true
+layers = 0
+cast_shadow = 0
+extra_cull_margin = 16384.0
+ignore_occlusion_culling = true
+gi_mode = 0
