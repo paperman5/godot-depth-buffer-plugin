@@ -13,6 +13,8 @@ const encode_shader := preload("res://addons/depth_buffer/depth_encode.gdshader"
 		cull_mask = value
 		cam.cull_mask = value
 		shader_mesh.layers = value
+		if is_instance_valid(target_viewport) and is_instance_valid(target_viewport.get_camera_3d()):
+			target_viewport.get_camera_3d().cull_mask &= ~cull_mask
 
 var _viewport_ready := false
 var target_viewport : Viewport:
@@ -29,14 +31,32 @@ signal viewport_ready
 func _ready() -> void:
 	viewport_ready.connect(_set_viewport_ready.bind(true))
 	
-	# Create a single triangle out of vertices:
+	_create_shader_mesh()
+	_update()
+
+func _process(_delta: float) -> void:
+	_update()
+
+func _update() -> void:
+	if not is_instance_valid(target_viewport):
+		return
+	var target_cam = target_viewport.get_camera_3d()
+	if not is_instance_valid(target_cam):
+		return
+	size = target_viewport.size
+	sync_camera(target_cam)
+
+func _create_shader_mesh() -> void:
+	# Creates a single triangle with the depth encoding shader as the material.
+	# See https://docs.godotengine.org/en/stable/tutorials/shaders/advanced_postprocessing.html#an-optimization
+	
+	# Triangle data
 	var verts = PackedVector3Array()
 	verts.append(Vector3(-1.0, -1.0, 0.0))
 	verts.append(Vector3(-1.0, 3.0, 0.0))
 	verts.append(Vector3(3.0, -1.0, 0.0))
 	
-	# Create an array of arrays.
-	# This could contain normals, colors, UVs, etc.
+	# Create the mesh array from the triangle
 	var mesh_array = []
 	mesh_array.resize(Mesh.ARRAY_MAX) #required size for ArrayMesh Array
 	mesh_array[Mesh.ARRAY_VERTEX] = verts #position of vertex array in ArrayMesh Array
@@ -51,20 +71,6 @@ func _ready() -> void:
 	var mat = ShaderMaterial.new()
 	mat.shader = encode_shader
 	shader_mesh.material_override = mat
-	
-	_update()
-
-func _process(_delta: float) -> void:
-	_update()
-
-func _update() -> void:
-	if not is_instance_valid(target_viewport):
-		return
-	var target_cam = target_viewport.get_camera_3d()
-	if not is_instance_valid(target_cam):
-		return
-	size = target_viewport.size
-	sync_camera(target_cam)
 
 func sync_camera(sync_to : Camera3D) -> void:
 	cam.keep_aspect 	= sync_to.keep_aspect
