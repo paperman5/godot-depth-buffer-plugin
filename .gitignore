@@ -1,0 +1,7 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Ignore project files as this repo is for the plugin only
+test_project/
+project.godot
