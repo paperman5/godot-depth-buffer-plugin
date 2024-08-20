@@ -7,7 +7,6 @@ uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_n
 uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
 // Use `hint_normal` to read as linear data instead of sRGB data
 uniform sampler2D silhouette_layer_depth : hint_normal, repeat_disable, filter_nearest;
-uniform sampler2D obstruction_layer_depth : hint_normal, repeat_disable, filter_nearest;
 
 uniform vec4 silhouette_color = vec4(0.1, 0.1, 0.1, 0.9);
 
@@ -21,8 +20,6 @@ void fragment() {
 	float depth_trunc = truncate_float(depth);
 
 	vec4 silhouette_depth = texture(silhouette_layer_depth, SCREEN_UV);
-	vec4 obstruction_depth = texture(obstruction_layer_depth, SCREEN_UV);
-	float f1 = unpack_uvec3_to_nfloat(uvec3(round(silhouette_depth.rgb * 255.0)));
-	float f2 = unpack_uvec3_to_nfloat(uvec3(round(obstruction_depth.rgb * 255.0)));
-	ALBEDO = (depth_trunc > f1 && f1 > f2 && silhouette_depth.a > 0.0) ? mix(c.rgb, silhouette_color.rgb, silhouette_color.a) : c.rgb;
+	float f = unpack_uvec3_to_nfloat(uvec3(round(silhouette_depth.rgb * 255.0)));
+	ALBEDO = (depth_trunc > f && silhouette_depth.a > 0.0) ? mix(c.rgb, silhouette_color.rgb, silhouette_color.a) : c.rgb;
 }

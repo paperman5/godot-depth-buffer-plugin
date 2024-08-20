@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://boov5siiip545"]
+
+[ext_resource type="Script" path="res://addons/depth_buffer/example/bullet.gd" id="1_ki383"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u1d78"]
+albedo_color = Color(1, 0.388235, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_iomgb"]
+material = SubResource("StandardMaterial3D_u1d78")
+top_radius = 0.0
+bottom_radius = 0.1
+height = 0.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_v40ac"]
+radius = 0.15
+
+[node name="Bullet" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 9
+motion_mode = 1
+script = ExtResource("1_ki383")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+layers = 5
+mesh = SubResource("CylinderMesh_iomgb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_v40ac")
