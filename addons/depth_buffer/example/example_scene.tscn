@@ -87,7 +87,7 @@ left_to_right = 0.0
 size = Vector3(4, 4, 2)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hmv7j"]
-points = PackedVector3Array(-2, -2, -1, -2, -2, 1, 2, -2, 1, 2, -2, -1, -2, 2, -1, -2, 2, 1)
+points = PackedVector3Array(-2, -2, -1, -2, -2, 1, 2, -2, 1, 2, -2, -1, -2, 2.01, -1, -2, 2.01, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_stgwf"]
 albedo_texture = ExtResource("4_6jrgr")
@@ -99,7 +99,7 @@ left_to_right = 0.0
 size = Vector3(2, 2, 2)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mspvy"]
-points = PackedVector3Array(-1, -1, -1, -1, -1, 1, 1, -1, 1, 1, -1, -1, -1, 1, -1, -1, 1, 1)
+points = PackedVector3Array(-1, -1, -1, -1, -1, 1, 1, -1, 1, 1, -1, -1, -1, 1.01, -1, -1, 1.01, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mtakn"]
 albedo_texture = ExtResource("6_v5w0d")
@@ -111,7 +111,7 @@ left_to_right = 0.0
 size = Vector3(4, 2, 2)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cnt1l"]
-points = PackedVector3Array(-2, -1, -1, -2, -1, 1, 2, -1, 1, 2, -1, -1, -2, 1, -1, -2, 1, 1)
+points = PackedVector3Array(-2, -1, -1, -2, -1, 1, 2, -1, 1, 2, -1, -1, -2, 1.01, -1, -2, 1.01, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fj36c"]
 albedo_texture = ExtResource("4_6jrgr")
