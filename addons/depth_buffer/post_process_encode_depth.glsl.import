@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dm723x7vo1eak"
+path="res://.godot/imported/post_process_encode_depth.glsl-9410973905cd573f6b483fc6109aae62.res"
+
+[deps]
+
+source_file="res://addons/depth_buffer/post_process_encode_depth.glsl"
+dest_files=["res://.godot/imported/post_process_encode_depth.glsl-9410973905cd573f6b483fc6109aae62.res"]
+
+[params]
+

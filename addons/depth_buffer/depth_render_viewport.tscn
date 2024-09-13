@@ -1,10 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsgbwq2cmcjjk"]
+[gd_scene load_steps=6 format=3 uid="uid://bsgbwq2cmcjjk"]
 
 [ext_resource type="Script" path="res://addons/depth_buffer/depth_render_viewport.gd" id="1_1ddg3"]
+[ext_resource type="Script" path="res://addons/depth_buffer/post_process_encode_depth.gd" id="2_rhwkm"]
 
 [sub_resource type="Environment" id="Environment_4am2h"]
 ambient_light_source = 1
 reflected_light_source = 1
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_ea0iu"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("2_rhwkm")
+
+[sub_resource type="Compositor" id="Compositor_pnm6b"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_ea0iu")])
 
 [node name="DepthRenderViewport" type="SubViewport"]
 process_priority = 500
@@ -20,11 +33,4 @@ unique_name_in_owner = true
 process_priority = 500
 cull_mask = 0
 environment = SubResource("Environment_4am2h")
-
-[node name="ShaderMesh" type="MeshInstance3D" parent="Camera3D"]
-unique_name_in_owner = true
-layers = 0
-cast_shadow = 0
-extra_cull_margin = 16384.0
-ignore_occlusion_culling = true
-gi_mode = 0
+compositor = SubResource("Compositor_pnm6b")

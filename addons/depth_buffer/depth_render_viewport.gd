@@ -1,10 +1,7 @@
 class_name DepthBufferViewport
 extends SubViewport
 
-const encode_shader := preload("res://addons/depth_buffer/depth_encode.gdshader")
-
 @onready var cam := get_node("%Camera3D") as Camera3D
-@onready var shader_mesh := get_node("%ShaderMesh") as MeshInstance3D
 
 @export_flags_3d_render var cull_mask : int:
 	get:
@@ -12,7 +9,6 @@ const encode_shader := preload("res://addons/depth_buffer/depth_encode.gdshader"
 	set(value):
 		cull_mask = value
 		cam.cull_mask = value
-		shader_mesh.layers = value
 		if is_instance_valid(target_viewport) and is_instance_valid(target_viewport.get_camera_3d()):
 			target_viewport.get_camera_3d().cull_mask &= ~cull_mask
 
@@ -31,7 +27,6 @@ signal viewport_ready
 func _ready() -> void:
 	viewport_ready.connect(_set_viewport_ready.bind(true))
 	
-	_create_shader_mesh()
 	_update()
 
 func _process(_delta: float) -> void:
@@ -46,41 +41,15 @@ func _update() -> void:
 	size = target_viewport.size
 	sync_camera(target_cam)
 
-func _create_shader_mesh() -> void:
-	# Creates a single triangle with the depth encoding shader as the material.
-	# See https://docs.godotengine.org/en/stable/tutorials/shaders/advanced_postprocessing.html#an-optimization
-	
-	# Triangle data
-	var verts = PackedVector3Array()
-	verts.append(Vector3(-1.0, -1.0, 0.0))
-	verts.append(Vector3(-1.0, 3.0, 0.0))
-	verts.append(Vector3(3.0, -1.0, 0.0))
-	
-	# Create the mesh array from the triangle
-	var mesh_array = []
-	mesh_array.resize(Mesh.ARRAY_MAX) #required size for ArrayMesh Array
-	mesh_array[Mesh.ARRAY_VERTEX] = verts #position of vertex array in ArrayMesh Array
-	
-	# Create mesh from mesh_array:
-	var am := ArrayMesh.new()
-	am.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, mesh_array)
-	shader_mesh.mesh = am
-	
-	# Create shader material
-	shader_mesh.layers = cam.cull_mask
-	var mat = ShaderMaterial.new()
-	mat.shader = encode_shader
-	shader_mesh.material_override = mat
-
 func sync_camera(sync_to : Camera3D) -> void:
 	cam.keep_aspect 	= sync_to.keep_aspect
-	cam.h_offset 		= sync_to.h_offset
-	cam.v_offset 		= sync_to.v_offset
+	#cam.h_offset 		= sync_to.h_offset
+	#cam.v_offset 		= sync_to.v_offset
 	cam.projection 		= sync_to.projection
 	cam.fov 			= sync_to.fov
 	cam.near 			= sync_to.near
 	cam.far 			= sync_to.far
-	cam.global_transform = sync_to.global_transform
+	cam.global_transform = sync_to.get_camera_transform()
 
 func _set_viewport_ready(value : bool):
 	_viewport_ready = value

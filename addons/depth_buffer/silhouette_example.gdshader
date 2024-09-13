@@ -11,6 +11,8 @@ uniform sampler2D obstruction_layer_depth : hint_normal, repeat_disable, filter_
 
 uniform vec4 silhouette_color = vec4(0.1, 0.1, 0.1, 0.9);
 
+const float EPS = 1.0E-6;
+
 void vertex() {
 	POSITION = vec4(VERTEX.xy, 1.0, 1.0);
 }
@@ -18,11 +20,10 @@ void vertex() {
 void fragment() {
 	vec4 c = texture(screen_texture, SCREEN_UV);
 	float depth = texture(depth_texture, SCREEN_UV).r;
-	float depth_trunc = truncate_float(depth);
-
 	vec4 silhouette_depth = texture(silhouette_layer_depth, SCREEN_UV);
 	vec4 obstruction_depth = texture(obstruction_layer_depth, SCREEN_UV);
-	float f1 = unpack_uvec3_to_nfloat(uvec3(round(silhouette_depth.rgb * 255.0)));
-	float f2 = unpack_uvec3_to_nfloat(uvec3(round(obstruction_depth.rgb * 255.0)));
-	ALBEDO = (depth_trunc > f1 && f1 > f2 && silhouette_depth.a > 0.0) ? mix(c.rgb, silhouette_color.rgb, silhouette_color.a) : c.rgb;
+	
+	float f1 = decode_depth(silhouette_depth);
+	float f2 = decode_depth(obstruction_depth);
+	ALBEDO = (depth - f1 > EPS && f1 - f2 > EPS && depth > 0.0) ? mix(c.rgb, silhouette_color.rgb, silhouette_color.a) : c.rgb;
 }
