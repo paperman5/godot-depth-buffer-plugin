@@ -22,7 +22,7 @@ void fragment() {
 	float depth = texture(depth_texture, SCREEN_UV).r;
 	vec4 silhouette_depth = texture(silhouette_layer_depth, SCREEN_UV);
 	vec4 obstruction_depth = texture(obstruction_layer_depth, SCREEN_UV);
-	
+
 	float f1 = decode_depth(silhouette_depth);
 	float f2 = decode_depth(obstruction_depth);
 	ALBEDO = (depth - f1 > EPS && f1 - f2 > EPS && depth > 0.0) ? mix(c.rgb, silhouette_color.rgb, silhouette_color.a) : c.rgb;

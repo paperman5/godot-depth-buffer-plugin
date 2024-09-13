@@ -21,7 +21,7 @@ void fragment() {
 	vec4 c2 = texture(screen_texture, SCREEN_UV);
 	float depth_real = texture(depth_texture, SCREEN_UV).r;
 	float depth_decoded = decode_depth(c);
-	
+
 	if (display_encoded_depth) {
 		ALBEDO = c.rgb;
 		ALPHA = c.a;
