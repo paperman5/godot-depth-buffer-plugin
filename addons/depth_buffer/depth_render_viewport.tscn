@@ -21,7 +21,6 @@ compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_ea0i
 
 [node name="DepthRenderViewport" type="SubViewport"]
 process_priority = 500
-transparent_bg = true
 handle_input_locally = false
 debug_draw = 1
 positional_shadow_atlas_size = 0

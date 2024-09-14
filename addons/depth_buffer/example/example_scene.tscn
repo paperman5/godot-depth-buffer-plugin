@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://kwal67fnjc6b"]
+[gd_scene load_steps=41 format=3 uid="uid://kwal67fnjc6b"]
 
 [ext_resource type="Script" path="res://addons/depth_buffer/example/example_scene.gd" id="1_6dppx"]
 [ext_resource type="PackedScene" uid="uid://duwon6bedjych" path="res://addons/depth_buffer/example/character.tscn" id="2_8lgjn"]
@@ -123,6 +123,16 @@ size = Vector3(8, 0.1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kystv"]
 size = Vector3(8, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bufrv"]
+transparency = 1
+albedo_color = Color(0.309804, 0.0784314, 0.839216, 0.564706)
+roughness = 0.15
+refraction_enabled = true
+refraction_scale = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ju2r7"]
+radius = 1.0
 
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_6dppx")
@@ -620,6 +630,19 @@ mesh = SubResource("BoxMesh_x27qf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/Bridge"]
 shape = SubResource("BoxShape3D_kystv")
+
+[node name="TransparentSphere" type="StaticBody3D" parent="Obstacles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.9102, 1, 6.42474)
+metadata/_edit_group_ = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Obstacles/TransparentSphere"]
+radius = 1.0
+radial_segments = 24
+rings = 12
+material = SubResource("StandardMaterial3D_bufrv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/TransparentSphere"]
+shape = SubResource("SphereShape3D_ju2r7")
 
 [node name="EnemySpawns" type="Node3D" parent="."]
 metadata/_edit_lock_ = true
