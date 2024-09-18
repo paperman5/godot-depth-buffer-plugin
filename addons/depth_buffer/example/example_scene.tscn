@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://kwal67fnjc6b"]
+[gd_scene load_steps=42 format=3 uid="uid://kwal67fnjc6b"]
 
 [ext_resource type="Script" path="res://addons/depth_buffer/example/example_scene.gd" id="1_6dppx"]
 [ext_resource type="PackedScene" uid="uid://duwon6bedjych" path="res://addons/depth_buffer/example/character.tscn" id="2_8lgjn"]
@@ -20,6 +20,8 @@ background_mode = 2
 sky = SubResource("Sky_yvj71")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="Compositor" id="Compositor_2w55w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a8vtf"]
 size = Vector3(100, 0.5, 100)
@@ -139,6 +141,7 @@ script = ExtResource("1_6dppx")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8jlik")
+compositor = SubResource("Compositor_2w55w")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)

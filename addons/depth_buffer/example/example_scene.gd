@@ -6,14 +6,17 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("test"):
-		var sm = DepthBufferManager.add_shader_mesh_to_viewport()
+		#var sm = DepthBufferManager.add_shader_mesh_to_viewport()
 		var vp1 = await DepthBufferManager.create_depth_buffer_viewport(2)
 		var vp2 = await DepthBufferManager.create_depth_buffer_viewport(3)
-		if not sm.is_node_ready():
-			await sm.ready
-		sm.set_shader(load("res://addons/depth_buffer/silhouette_example.gdshader"))
-		sm.set_shader_parameter("silhouette_layer_depth", vp1.get_texture())
-		sm.set_shader_parameter("obstruction_layer_depth", vp2.get_texture())
+		var cam = get_viewport().get_camera_3d()
+		var compositor = Compositor.new()
+		var effect = PostProcessSilhouetteLayered.new()
+		effect.effect_callback_type = CompositorEffect.EFFECT_CALLBACK_TYPE_POST_SKY
+		effect.silhouette_viewport_texture = vp1.get_texture()
+		effect.obstruction_viewport_texture = vp2.get_texture()
+		compositor.compositor_effects = [effect]
+		cam.compositor = compositor
 
 func setup_actions() -> void:
 	InputMap.add_action("move_forward")

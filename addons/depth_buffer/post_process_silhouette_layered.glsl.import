@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dboagne5sxgm5"
+path="res://.godot/imported/post_process_silhouette_layered.glsl-311bc99a4b654473f511499f97dc4d23.res"
+
+[deps]
+
+source_file="res://addons/depth_buffer/post_process_silhouette_layered.glsl"
+dest_files=["res://.godot/imported/post_process_silhouette_layered.glsl-311bc99a4b654473f511499f97dc4d23.res"]
+
+[params]
+
