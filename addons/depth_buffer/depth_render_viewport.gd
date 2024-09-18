@@ -38,7 +38,7 @@ func _update() -> void:
 	var target_cam = target_viewport.get_camera_3d()
 	if not is_instance_valid(target_cam):
 		return
-	size = target_viewport.size
+	size = target_viewport.size * target_viewport.scaling_3d_scale
 	sync_camera(target_cam)
 
 func sync_camera(sync_to : Camera3D) -> void:
@@ -50,10 +50,6 @@ func sync_camera(sync_to : Camera3D) -> void:
 	cam.near 			= sync_to.near
 	cam.far 			= sync_to.far
 	cam.global_transform = sync_to.get_camera_transform()
-	
-	if is_instance_valid(target_viewport):
-		scaling_3d_mode = target_viewport.scaling_3d_mode
-		scaling_3d_scale = target_viewport.scaling_3d_scale
 
 func _set_viewport_ready(value : bool):
 	_viewport_ready = value
