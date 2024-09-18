@@ -6,7 +6,6 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("test"):
-		#var sm = DepthBufferManager.add_shader_mesh_to_viewport()
 		var vp1 = await DepthBufferManager.create_depth_buffer_viewport(2)
 		var vp2 = await DepthBufferManager.create_depth_buffer_viewport(3)
 		var cam = get_viewport().get_camera_3d()

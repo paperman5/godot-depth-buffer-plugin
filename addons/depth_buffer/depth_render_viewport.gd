@@ -27,6 +27,12 @@ signal viewport_ready
 func _ready() -> void:
 	viewport_ready.connect(_set_viewport_ready.bind(true))
 	
+	# The compute shaders for the effects use this ViewportTexture, but they
+	# don't notify this node that it's being used, so we need to always update
+	render_target_update_mode = UPDATE_ALWAYS
+	# Needs to be bilinear no matter the project setting
+	scaling_3d_mode = SCALING_3D_MODE_BILINEAR
+	
 	_update()
 
 func _process(_delta: float) -> void:
@@ -43,8 +49,6 @@ func _update() -> void:
 
 func sync_camera(sync_to : Camera3D) -> void:
 	cam.keep_aspect 	= sync_to.keep_aspect
-	#cam.h_offset 		= sync_to.h_offset
-	#cam.v_offset 		= sync_to.v_offset
 	cam.projection 		= sync_to.projection
 	cam.fov 			= sync_to.fov
 	cam.near 			= sync_to.near
