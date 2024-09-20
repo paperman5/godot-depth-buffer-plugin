@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bsgbwq2cmcjjk"]
 
-[ext_resource type="Script" path="res://addons/depth_buffer/depth_render_viewport.gd" id="1_1ddg3"]
-[ext_resource type="Script" path="res://addons/depth_buffer/post_process_encode_depth.gd" id="2_rhwkm"]
+[ext_resource type="Script" path="res://addons/depth_buffer/depth_buffer_viewport.gd" id="1_ly6sw"]
+[ext_resource type="Script" path="res://addons/depth_buffer/post_process_encode_depth.gd" id="2_q0565"]
 
 [sub_resource type="Environment" id="Environment_4am2h"]
 ambient_light_source = 1
@@ -14,19 +14,19 @@ enabled = true
 effect_callback_type = 4
 needs_motion_vectors = false
 needs_normal_roughness = false
-script = ExtResource("2_rhwkm")
+script = ExtResource("2_q0565")
 
 [sub_resource type="Compositor" id="Compositor_pnm6b"]
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_ea0iu")])
 
-[node name="DepthRenderViewport" type="SubViewport"]
+[node name="DepthBufferViewport" type="SubViewport"]
 process_priority = 500
 handle_input_locally = false
 debug_draw = 1
 positional_shadow_atlas_size = 0
 canvas_cull_mask = 4293918720
 render_target_update_mode = 4
-script = ExtResource("1_1ddg3")
+script = ExtResource("1_ly6sw")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 unique_name_in_owner = true

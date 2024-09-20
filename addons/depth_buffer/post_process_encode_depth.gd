@@ -49,14 +49,14 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 			var size: Vector2i = render_scene_buffers.get_internal_size()
 			if size.x == 0 and size.y == 0:
 				return
-
+			
 			# We can use a compute shader here.
 			@warning_ignore("integer_division")
 			var x_groups := (size.x - 1) / 8 + 1
 			@warning_ignore("integer_division")
 			var y_groups := (size.y - 1) / 8 + 1
 			var z_groups := 1
-
+			
 			# Create push constant.
 			# Must be aligned to 16 bytes and be in the same order as defined in the shader.
 			var push_constant := PackedFloat32Array([
@@ -65,14 +65,14 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 				0.0,
 				0.0,
 			])
-
+			
 			# Loop through views just in case we're doing stereo rendering. No extra cost if this is mono.
 			var view_count: int = render_scene_buffers.get_view_count()
 			for view in view_count:
 				# Get the RID for the depth & color images for the compute shader
 				var color_image: RID = render_scene_buffers.get_color_layer(view)
 				var depth_image: RID = render_scene_buffers.get_depth_layer(view)
-
+			
 				# Create a uniform set, this will be cached, the cache will be cleared if our viewports configuration is changed.
 				var uniform := RDUniform.new()
 				uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
@@ -86,7 +86,7 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 				uniform2.add_id(sampler)
 				uniform2.add_id(depth_image)
 				var uniform_set := UniformSetCacheRD.get_cache(shader, 0, [uniform, uniform2])
-
+			
 				# Run our compute shader.
 				var compute_list := rd.compute_list_begin()
 				rd.compute_list_bind_compute_pipeline(compute_list, pipeline)

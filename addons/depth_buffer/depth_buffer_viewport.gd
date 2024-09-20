@@ -24,6 +24,7 @@ var target_viewport : Viewport:
 
 signal viewport_ready
 
+
 func _ready() -> void:
 	viewport_ready.connect(_set_viewport_ready.bind(true))
 	
@@ -38,6 +39,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	_update()
 
+
 func _update() -> void:
 	if not is_instance_valid(target_viewport):
 		return
@@ -47,6 +49,7 @@ func _update() -> void:
 	size = target_viewport.size * target_viewport.scaling_3d_scale
 	sync_camera(target_cam)
 
+
 func sync_camera(sync_to : Camera3D) -> void:
 	cam.keep_aspect 	= sync_to.keep_aspect
 	cam.projection 		= sync_to.projection
@@ -55,8 +58,10 @@ func sync_camera(sync_to : Camera3D) -> void:
 	cam.far 			= sync_to.far
 	cam.global_transform = sync_to.get_camera_transform()
 
+
 func _set_viewport_ready(value : bool):
 	_viewport_ready = value
+
 
 func is_viewport_ready() -> bool:
 	return _viewport_ready

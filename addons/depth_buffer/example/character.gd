@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 const zoom_out_params := Vector3(5.0, 1.0, 0.5)
 const zoom_in_params := Vector3(2.0, 1.3, 0.5)
 const bullet_scene = preload("res://addons/depth_buffer/example/bullet.tscn")
@@ -17,10 +18,12 @@ const bullet_scene = preload("res://addons/depth_buffer/example/bullet.tscn")
 var _jump_velocity := 1.0
 var _jump_gravity := 1.0
 
+
 func _ready() -> void:
 	Input.warp_mouse(DisplayServer.window_get_size()/2)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	calc_physics()
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -41,6 +44,7 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, move_speed)
 
 	move_and_slide()
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_input_capture"):
@@ -69,6 +73,7 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("shoot"):
 			shoot_bullet()
 
+
 func shoot_bullet() -> void:
 	var ray_length = 1000.0
 	var space_state = get_world_3d().direct_space_state
@@ -89,7 +94,8 @@ func shoot_bullet() -> void:
 	bullet.global_transform = global_transform
 	bullet.look_at_from_position(global_position, target_pos)
 	get_parent().add_child(bullet)
-	
+
+
 func calc_physics() -> void:
 	_jump_velocity = 2.0 * jump_height / jump_apex_time
 	_jump_gravity = 2.0 * jump_height / jump_apex_time**2.0

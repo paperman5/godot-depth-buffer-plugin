@@ -1,9 +1,12 @@
 extends CharacterBody3D
 
+
 const SPEED = 20.0
+
 
 func _ready() -> void:
 	velocity = -transform.basis.z * SPEED
+
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()

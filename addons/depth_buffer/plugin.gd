@@ -1,7 +1,9 @@
 @tool
 extends EditorPlugin
 
+
 const AUTOLOAD_NAME := "DepthBufferManager"
+
 
 func _enter_tree() -> void:
 	# Add the manager script as an autoload.

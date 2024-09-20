@@ -1,21 +1,19 @@
 extends Node3D
 
+
 func _ready() -> void:
 	setup_actions()
 	spawn_enemies()
 
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("test"):
-		var vp1 = await DepthBufferManager.create_depth_buffer_viewport(2)
-		var vp2 = await DepthBufferManager.create_depth_buffer_viewport(3)
 		var cam = get_viewport().get_camera_3d()
 		var compositor = Compositor.new()
-		var effect = PostProcessSilhouetteLayered.new()
-		effect.effect_callback_type = CompositorEffect.EFFECT_CALLBACK_TYPE_POST_SKY
-		effect.silhouette_viewport_texture = vp1.get_texture()
-		effect.obstruction_viewport_texture = vp2.get_texture()
+		var effect = PostProcessSilhouette.new()
 		compositor.compositor_effects = [effect]
 		cam.compositor = compositor
+
 
 func setup_actions() -> void:
 	InputMap.add_action("move_forward")
@@ -51,6 +49,7 @@ func setup_actions() -> void:
 	ev = InputEventKey.new()
 	ev.keycode = KEY_ESCAPE
 	InputMap.action_add_event("toggle_input_capture", ev)
+
 
 func spawn_enemies() -> void:
 	var enemy = load("res://addons/depth_buffer/example/enemy.tscn")
