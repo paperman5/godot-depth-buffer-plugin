@@ -4,7 +4,7 @@ A plugin for Godot 4.3+ to make viewport depth buffers usable by other viewports
 ## How it works
 The plugin works by adding custom type of `SubViewport` called `DepthBufferViewport`. Since the depth buffer of a `SubViewport` can't be accessed by another `Viewport` currently in Godot, the depth buffer of `DepthBufferViewport`s are encoded to a color image which can be accessed by other `Viewport`s through the `ViewportTexture`. This encoded texture can then be decoded by a shader or `CompositorEffect` to get the original depth buffer back. The encoding works by converting the 32bit float depth buffer to 4x 8bit unsigned integers by direct bit copying and assinging those uints to the color channels of the viewport output.
 
-![Bit Conversion](doc/bit_conversion.png)
+![Bit Conversion](addons/depth_buffer/image/bit_conversion.png)
 
 ## How to use it
 
@@ -27,10 +27,10 @@ The plugin comes with a premade silhouette effect that can be used with the new 
 
 Any mesh that you want to be shown as a silhouette needs to have its `VisualInstance3D.layer` set to include the `silhouette_mask`, and any mesh that you don't want the silhouette to be shown over should have its layer set to include `obstruction_mask`. You may need to set the node to allow children to be edited (right click > editable children) if you have imported a mesh into the editor and can't change its render layer. In the example image below, the enemies are on render layers 1 & 2 and the player is on render layers 1 & 3, with `silhouette_mask` set to layer 2 and `obstruction_mask` set to layer 3:
 
-![TPS Example](doc/tps_example.jpg)
+![TPS Example](addons/depth_buffer/image/tps_example.jpg)
 
 ## Limitations
-- This plugin currently only works with the Forward+ renderer. It should also work with the Mobile renderer but [this](https://github.com/godotengine/godot/issues/96737) bug prevents the viewport's color texture from being written to in a compute shader.
+- This plugin currently only works with the Forward+ renderer. It should also work with the Mobile renderer but [this bug](https://github.com/godotengine/godot/issues/96737) prevents the viewport's color texture from being written to in a compute shader.
 - This requires the new `CompositorEffect`s added in Godot 4.3 since the alpha channel of a viewport's texture can't be overwritten in a regular Godot shader.
 - While I've tried my best to make this plugin performant, it still requires rendering extra viewports which can be expensive. If only a few objects are being re-rendered (as is the case with the silhouette) the impact is not too much, but still more than a native stencil buffer approach. When/if stencil buffer access is allowed in Godot, this plugin would probably be unneccessary.
 - Antialiasing: The silhouette effect does not work well with AMD FSR 2.2 or TAA and does not work at all with MSAA, but does work with FXAA. (Could maybe be fixed, I just don't know how TAA or MSAA work lol)
