@@ -644,6 +644,19 @@ material = SubResource("StandardMaterial3D_bufrv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/TransparentSphere"]
 shape = SubResource("SphereShape3D_ju2r7")
 
+[node name="TransparentSphere2" type="StaticBody3D" parent="Obstacles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 3, 11)
+metadata/_edit_group_ = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Obstacles/TransparentSphere2"]
+radius = 1.0
+radial_segments = 24
+rings = 12
+material = SubResource("StandardMaterial3D_bufrv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacles/TransparentSphere2"]
+shape = SubResource("SphereShape3D_ju2r7")
+
 [node name="EnemySpawns" type="Node3D" parent="."]
 metadata/_edit_lock_ = true
 
@@ -667,3 +680,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 4, -5)
 
 [node name="Character" parent="." instance=ExtResource("2_8lgjn")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -6, 1, -18)
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 241.0
+offset_bottom = 114.0
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer"]
+layout_mode = 2
+text = "ESC to toggle mouse capture"
+
+[node name="Label3" type="Label" parent="HUD/VBoxContainer"]
+layout_mode = 2
+text = "WASD to move"
+
+[node name="Label4" type="Label" parent="HUD/VBoxContainer"]
+layout_mode = 2
+text = "Left Click to shoot"
+
+[node name="Label2" type="Label" parent="HUD/VBoxContainer"]
+layout_mode = 2
+text = "'G' to toggle silhouette shader"

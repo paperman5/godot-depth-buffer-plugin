@@ -20,7 +20,6 @@ script = ExtResource("2_q0565")
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_ea0iu")])
 
 [node name="DepthBufferViewport" type="SubViewport"]
-process_priority = 500
 handle_input_locally = false
 debug_draw = 1
 positional_shadow_atlas_size = 0
@@ -30,7 +29,6 @@ script = ExtResource("1_ly6sw")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 unique_name_in_owner = true
-process_priority = 500
 cull_mask = 0
 environment = SubResource("Environment_4am2h")
 compositor = SubResource("Compositor_pnm6b")

@@ -7,15 +7,21 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("test"):
+	if event.is_action_pressed("toggle_shader"):
+		# Toggle the effect on the camera if there is one, otherwise create one
 		var cam = get_viewport().get_camera_3d()
-		var compositor = Compositor.new()
-		var effect = PostProcessSilhouette.new()
-		compositor.compositor_effects = [effect]
-		cam.compositor = compositor
+		if cam.compositor != null and not cam.compositor.compositor_effects.is_empty() \
+				and cam.compositor.compositor_effects[0] is PostProcessSilhouette:
+			cam.compositor.compositor_effects[0].enabled = !cam.compositor.compositor_effects[0].enabled
+		else:
+			var compositor = Compositor.new()
+			var effect = PostProcessSilhouette.new()
+			compositor.compositor_effects = [effect]
+			cam.compositor = compositor
 
 
 func setup_actions() -> void:
+	# Set up input actions here just for the demo to avoid conflicts with user actions
 	InputMap.add_action("move_forward")
 	InputMap.add_action("move_backward")
 	InputMap.add_action("move_left")
@@ -24,6 +30,7 @@ func setup_actions() -> void:
 	InputMap.add_action("aim")
 	InputMap.add_action("shoot")
 	InputMap.add_action("toggle_input_capture")
+	InputMap.add_action("toggle_shader")
 	
 	var ev = InputEventKey.new()
 	ev.keycode = KEY_W
@@ -49,6 +56,9 @@ func setup_actions() -> void:
 	ev = InputEventKey.new()
 	ev.keycode = KEY_ESCAPE
 	InputMap.action_add_event("toggle_input_capture", ev)
+	ev = InputEventKey.new()
+	ev.keycode = KEY_G
+	InputMap.action_add_event("toggle_shader", ev)
 
 
 func spawn_enemies() -> void:
